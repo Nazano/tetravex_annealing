@@ -1,3 +1,4 @@
+#include <math.h>
 #include "game.hpp"
 
 void Board::parse(std::string path)
@@ -15,8 +16,12 @@ void Board::parse(std::string path)
         pieces.push_back(p);
         size += 1;
     }
-
     file.close();
+
+    dimension = int(sqrt(size));
+    
+    if (sqrt(size) * sqrt(size) != size)
+        std::cout << "WARNING: invalid grid size (" << size << " tiles)\n";
 }
 
 void Board::solve()
@@ -40,7 +45,7 @@ std::ostream& operator<<(std::ostream& os, const Board& board)
     for (auto& piece : board.pieces)
         one_str_pieces.append(piece.get_value());
     
-    int w = board.size / 2;
+    int w = sqrt(board.size);
 
     for (int i = 0; i < w; i++)
     {
