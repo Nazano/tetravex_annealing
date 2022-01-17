@@ -5,12 +5,12 @@
 int main(int argc, char const *argv[])
 {
     auto board = Board();
-    board.parse("../in.txt");
+    board.parse("../3x3.txt");
     std::cout << board;
 
     Solver s{board};
 
-    int result = s.solve(0.99, 0.1, 10, 10000, true);
+    int result = s.solve(0.99, 0.1, 10, 100000, true);
 
     if (result == 0)
         std::cout << "Solution found :\n";

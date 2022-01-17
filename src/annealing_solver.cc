@@ -60,10 +60,10 @@ int Solver::solve(float lambda, float Tmin, float Tmax, float max_iter, bool ver
             board.set_pieces(new_pieces);
             E = newE;
             if (verbose)
-                std::cout << "accepted to swap " << i1 << " and " << i2;
+                std::cout << "accepted to swap " << i1 << " and " << i2 << "\n";
         }
         else if (verbose)
-            std::cout << "refused to swap " << i1 << " and " << i2;
+            std::cout << "refused to swap " << i1 << " and " << i2 << "\n";
         
         // update the temperature
         if (T > Tmin)
