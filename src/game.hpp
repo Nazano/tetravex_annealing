@@ -32,7 +32,7 @@ class Board
         int size = 0;           // How many tiles we have. Should be a square number
         int dimension = 0;      // The dimension of the grid. dimension = int(sqrt(size))
         std::vector<Piece> pieces;
-
+        std::vector<int> pieces_in_place;
     public:
         Board(){};
         /**
@@ -54,6 +54,7 @@ class Board
         int get_board_dimension() {return dimension;};
 
         std::vector<Piece>& get_pieces() {return pieces;};
+        std::vector<int>& get_pieces_in_place() {return pieces_in_place;};
     
     friend std::ostream& operator<<(std::ostream&, const Board&);
 };

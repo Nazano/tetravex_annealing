@@ -6,7 +6,7 @@ void Board::parse(std::string path)
     // Open input file
     std::string line;
     std::ifstream file(path);
-
+    int line_index = 0;
     // Read eachline as a piece and add it to the board
     while (std::getline(file, line))
     {
@@ -14,6 +14,9 @@ void Board::parse(std::string path)
         auto sl = line.substr(0, 4);
         auto p = Piece(sl, in_good_place==std::string::npos);
         pieces.push_back(p);
+        if (in_good_place != -1)
+            pieces_in_place.push_back(line_index);
+        line_index ++;
         size += 1;
     }
     file.close();
