@@ -30,10 +30,10 @@ void Board::parse(std::string path)
 
 void Board::save(std::string path)
 {
-    std::ofstream outfile("path");
+    std::ofstream outfile(path);
 
     for (auto& piece : pieces)
-        outfile << piece;
+        outfile << piece << "\n";
 
     outfile.close();
 }
