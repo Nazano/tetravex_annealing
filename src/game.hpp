@@ -35,15 +35,17 @@ class Board
         std::vector<int> pieces_in_place;
     public:
         Board(){};
+        Board(std::vector<Piece> pieces, int size, int dimension)
+            : size(size)
+            , dimension(dimension)
+            , pieces(pieces)
+        {};
+
         /**
          * Parse input file and save the content into the vector pieces 
          */
         void parse(std::string);
 
-        /**
-         * Solve the Board inplace
-         */
-        void solve();
 
         /**
          * Save the board content to a file
@@ -53,8 +55,12 @@ class Board
         int get_board_size()    {return size;};
         int get_board_dimension() {return dimension;};
 
+        void set_pieces(std::vector<Piece> p) {pieces = p;};
+
         std::vector<Piece>& get_pieces() {return pieces;};
         std::vector<int>& get_pieces_in_place() {return pieces_in_place;};
+
+        int get_count_boundaries();
     
     friend std::ostream& operator<<(std::ostream&, const Board&);
 };

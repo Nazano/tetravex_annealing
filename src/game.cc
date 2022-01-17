@@ -27,10 +27,6 @@ void Board::parse(std::string path)
         std::cout << "WARNING: invalid grid size (" << size << " tiles)\n";
 }
 
-void Board::solve()
-{
-
-}
 
 void Board::save(std::string path)
 {
@@ -79,4 +75,18 @@ Piece::Piece(std::string& line, bool in_place)
 std::ostream& operator<<(std::ostream& os, const Piece& peice)
 {
     return os << peice.values;
+}
+
+int Board::get_count_boundaries()
+{
+    int count = 0;
+    for (int i = 0; i < dimension * dimension; i++) {
+        if (i % dimension > 0)    // check on the left
+            count++;
+        if (i >= dimension)       // check above
+        {
+            count++;
+        }
+    }
+    return count;
 }
