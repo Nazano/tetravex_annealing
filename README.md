@@ -81,25 +81,45 @@ Nous avons constaté deux choses :
 En somme, il faut trouver pour chaque taille de grille un Lambda optimal pour ne pas prendre trop de temps à converger, mais sans prendre le risque de se bloquer dans un minimum local (ce qui se traduit également par un temps de convergence élevé).
 
 
-- Dans le tableau suivant, nous avons reporté le nombre d'itérations nécessaires pour chaque taille de grille, pour différentes valeurs de Lambda. Chaque case contient le nombre d'itérations moyen pour 5 à 10 tests. Les abcisses correspondent à la taille de la grille, les ordonnées à Lambda. Les valeurs soulignées sont celles où Tmin est atteint, où on peut donc suspecter que le programme est dans un minimum local, duquel lequel il peine grandement à sortir. Ces grilles ont toutes une pièce bien placée située dans un coin.
+- Dans le tableau suivant, nous avons reporté le nombre d'itérations nécessaires pour chaque taille de grille, dans le pire des cas, pour différentes valeurs de Lambda. Chaque case contient le nombre d'itérations maximal sur 5 à 10 tests. Les abcisses correspondent à la taille de la grille, les ordonnées à Lambda. Les valeurs soulignées sont celles où Tmin est parfois atteint, où on peut donc suspecter que le programme est dans un minimum local, duquel lequel il peine grandement à sortir. Ces grilles ont toutes une pièce bien placée située dans un coin.
 
 | Lambda        | 2    | 3    | 4         | 5         | 6         |
 |---------------|------|------|-----------|-----------|-----------|
-| 0.9           | 4    | <ins>8272<ins>   | Not Found | Not Found | Not Found |
-| 0.99          | 6    | 100%   | 25%       | 12%       | Time Out  |
-| 0.999         | 5    | 3ms    | Not Found | Not Found | Not Found |
-| 0.9999        | 4    | 100%   | 25%       | 12%       | Time Out  |
-| 0.99999       | 4    | 100%   | 25%       | 12%       | Time Out  |
-| 0.999999      | 5    | 100%   | 25%       | 12%       | Time Out  |
-| 0.9999999     | 5    | 100%   | 25%       | 12%       | Time Out  |
-> Remarque: quand on passe l'algo sur le test `5b.txt` où 3 lignes sont déja leurs tuiles fixées la solution est trouvée en 40ms. 
+| 0.9           | 7    | <ins>8272<ins>   | <ins>>1M<ins>                   | <ins>>5M<ins>             | <ins>>5M<ins> |
+| 0.99          | 6    | <ins>5421<ins>   | <ins>>1M<ins>                   |    <ins>>5M<ins>          |  <ins>>5M<ins> |
+| 0.999         | 5    | <ins>4929<ins>   | 450 mais parfois <ins>>1M<ins>  | <ins>>5M<ins>             | <ins>>5M<ins> |
+| 0.9999        | 8    | 731              | 4.501                            |  <ins>>5M<ins>           | <ins>>5M<ins> |
+| 0.99999       | 6    | 820              | 7.560                            |  <ins>>5M<ins>           | <ins>>5M<ins> |
+| 0.999999      | 5    | 756              | 760.441                          |          723.418         | <ins>>5M<ins> |
+| 0.9999999     | 6    | 612              | 350.739                          |         2.461.035        | >5M |
+| nombre de grilles possibles | 3! = 6 | 8! = 40320 | 15! ≈  10^12 | 24! ≈ 10^24 | 35! ≈ 10^40 |
+
+Nous avons donc retenu les Lambdas suivant :
+
+grille 2x2, 3x3 et 4x4 : Lambda = 0.9999
+grille 5x5 : Lambda = 0.999999
+grille 6x6 : Lambda = 0.9999999
 
  - solution optimisée:
 
- Les fichiers de test correspondant sont:
+Étant donné qu'il existe toujours un risque de se trouver bloqué dans un minimum local lorsque Lambda n'est pas assez grand (exemple dans le tableau avec taille=5 et Lambda=0.999, le programme ne converge pas vers la solution une fois sur 20), nous avons décidé d'augmenter artificiellement T si Tmin est atteint. Nous avons choisi T = 3\*Tmin dans ce cas de figure.
+    
+Nous avons donc choisi les lambdas optimaux affichés sous le tableau ci-dessus, avec cette optimisation. Nous obtenons donc des temps de calcul en moyenne inférieurs, mais surtout, ils ne dépasse plus jamais 5 millions d'itérations pour les grilles de taille 2x2 à 5x5.
 
- * 2 : `2.txt`
- * 3 : `3a.txt`
- * 4 : `4.txt`
- * 5 : `5a.txt` 
- * 10 : `10.txt` 
+Enfin, nous avons aussi décidé de baisser Tmax à 0.8, ce qui permet aux grandes grilles de converger plus rapidement. Trop diminuer cette valeur risque cependant de se retrouver dans des minimums locaux.
+
+# Résultats finaux :
+
+- Voici le nombre d'itérations moyen pour chaque taille de grille :
+
+| Dimension        | 2    | 3    | 4         | 5           | 6            |
+|------------------|------|------|-----------|-------------|--------------|
+| Itérations       | 6    | 421  | 4.279     |  486.725    |    >5M       |
+| Temps            | < 1s | < 1s |     1s     | 42s        |    >5min     |
+    
+# Améliorations possibles :
+    
+- Une amélioration possible que nous n'avons pas implémenté aurait été de parfois déplacer des lignes ou des colonnes du tableau au lieu de simplement interchanger deux pièces. En effet, il arrive que des blocs résolus de plusieurs pièces se forment, mais que ce bloc ne soit pas bien positionné. Il s'agit d'une cause majeure de l'apparition de minimums locaux. \
+L'image ci-dessous illustre ce phénomène : le bloc encadré en rouge est localement résolu, mais doit être déplacé d'un cran vers le bas. Cette opération est quasiment impossible à atteindre avec des simples successions d'interchangements de deux pièces. En revanche, ajouter une opération qui permettrait de déplacer des groupes de colonnes ou de lignes permettrait de faire disparaitre ces minimums locaux.
+    
+![Alt text](example_readme.png)
