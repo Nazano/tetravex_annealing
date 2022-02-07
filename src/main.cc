@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
     if (dim == 6)
         lambda = 0.9999999;
 
-    int result = s.solve(lambda, 0.25, 0.8, 50000000, true);
+    int result = s.solve(lambda, 0.2, 0.8, 50000000, true);
 
     if (result == 0)
         std::cout << "Solution found :\n";
