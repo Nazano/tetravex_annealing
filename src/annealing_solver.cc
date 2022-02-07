@@ -57,6 +57,8 @@ int Solver::solve(float lambda, float Tmin, float Tmax, float max_iter, bool ver
         // update the temperature
         if (T > Tmin)
             T *= lambda;
+        else
+            T = Tmin * 3;
 
     }
 

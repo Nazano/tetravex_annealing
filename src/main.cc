@@ -18,8 +18,15 @@ int main(int argc, char const *argv[])
     std::cout << "initial board : \n" << board;
 
     Solver s{board};
+    int dim = board.get_board_dimension();
+    
+    float lambda = 0.9999;
+    if (dim == 5)
+        lambda = 0.999999;
+    if (dim == 6)
+        lambda = 0.9999999;
 
-    int result = s.solve(0.999999, 0.2, 1, 1000000, true);
+    int result = s.solve(lambda, 0.25, 0.8, 50000000, true);
 
     if (result == 0)
         std::cout << "Solution found :\n";
