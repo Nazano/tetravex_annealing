@@ -2,6 +2,9 @@
 
 Solveur d'un jeu de Tetravex
 
+Germain Cassé - germain.casse
+Antoine Julien - antoine.julien
+
 # Modélisation probabiliste
 
 Un algorithme de recuit simulé est utilisé pour résoudre le jeu.

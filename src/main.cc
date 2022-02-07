@@ -15,11 +15,11 @@ int main(int argc, char const *argv[])
 
     auto board = Board();
     board.parse(in_file);
-    std::cout << board;
+    std::cout << "initial board : \n" << board;
 
     Solver s{board};
 
-    int result = s.solve(0.99, 0.1, 10, 100000, true);
+    int result = s.solve(0.999999, 0.2, 1, 1000000, true);
 
     if (result == 0)
         std::cout << "Solution found :\n";
