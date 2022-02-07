@@ -53,7 +53,7 @@ FONCTION resoudre_tetravex :
     retourner Grille               # La grille n'a pas été résolue
 ```
 
-La fonction nombre_de_frontières() correspond au nombre total de contacts entre pièces dans une grille. Il est égal à 2*(N-1) avec N la dimension de la grille.
+La fonction nombre_de_frontières() correspond au nombre total de contacts entre pièces dans une grille. Il est égal à 2\*N\*(N-1) avec N la dimension de la grille.
 
 L'énergie d'une grille, qu'on obtient avec la fonction energie(), correspond au nombre de frontières qui correspondent. Une grille résolue a une énergie égale à max_E qui vaut nombre_de_frontières(Grille).
 
@@ -106,7 +106,7 @@ grille 6x6 : Lambda = 0.9999999
     
 Nous avons donc choisi les lambdas optimaux affichés sous le tableau ci-dessus, avec cette optimisation. Nous obtenons donc des temps de calcul en moyenne inférieurs, mais surtout, ils ne dépasse plus jamais 5 millions d'itérations pour les grilles de taille 2x2 à 5x5.
 
-Enfin, nous avons aussi décidé de baisser Tmax à 0.8, ce qui permet aux grandes grilles de converger plus rapidement. Trop diminuer cette valeur risque cependant de se retrouver dans des minimums locaux.
+Enfin, nous avons aussi décidé de baisser Tmax à 0.8, ce qui permet aux grandes grilles de converger plus rapidement. Trop diminuer cette valeur risque cependant de nous placer dans des minimums locaux.
 
 # Résultats finaux :
 
@@ -114,9 +114,9 @@ Enfin, nous avons aussi décidé de baisser Tmax à 0.8, ce qui permet aux grand
 
 | Dimension        | 2    | 3    | 4         | 5           | 6            |
 |------------------|------|------|-----------|-------------|--------------|
-| Itérations       | 6    | 421  | 4.279     |  486.725    |    >5M       |
-| Temps            | < 1s | < 1s |     1s     | 42s        |    >5min     |
-    
+| Itérations       | 6    | 421  | 4.279     |  486.725    |    9.785.354 |
+| Temps            | < 1s | < 1s |     1s    | 42s         |    23 min    |
+
 # Améliorations possibles :
     
 - Une amélioration possible que nous n'avons pas implémenté aurait été de parfois déplacer des lignes ou des colonnes du tableau au lieu de simplement interchanger deux pièces. En effet, il arrive que des blocs résolus de plusieurs pièces se forment, mais que ce bloc ne soit pas bien positionné. Il s'agit d'une cause majeure de l'apparition de minimums locaux. \
